@@ -1,0 +1,58 @@
+method: sconet
+data:
+  dataset: AbdomenCT-1K
+  data_path: data
+  classes: [background,
+    liver,
+    kidneys,
+    spleen,
+    pancreas]
+  scaling_coef: 400
+  input_type: pointcloud
+  pointcloud_n: null
+  points_subsample: 50000
+  pointcloud_file: pointcloud.npz
+  points_file: points.npz
+  points_metric_file: points.npz
+  train_split: train
+  val_split: val
+  test_split: test
+  canny_resolution: 256
+  canny_threshold:
+    low: 20
+    up: 50
+model:
+  encoder: pointnet_local_pool
+  encoder_kwargs:
+    use_colors: false
+    use_surf: true
+    hidden_dim: 32
+    grid_resolution: 32
+    unet3d: true
+    unet3d_kwargs:
+      num_levels: 3
+      f_maps: 32
+      in_channels: 32
+      num_groups: 1
+  decoder: simple_local
+  decoder_kwargs:
+    sample_mode: bilinear # bilinear / nearest
+    hidden_size: 32
+    num_classes: 5
+  c_dim: 32
+training:
+  out_dir: out/AbdomenCT-1K_demo
+  batch_size: 1
+  compute_metric_on_training_set: false
+  model_selection_metric: dice
+  model_selection_mode: maximize
+  check_val_every: 1
+  n_epoch: 300
+  loss: CEDiceLoss
+  loss_parameters: {alpha: 1, beta: 1}
+  optimizer: AdamW
+generation:
+  model_file: model_best.pt
+  generation_dir: generation_low-res   # <-
+  generate_volume: true         
+  compute_flops: false

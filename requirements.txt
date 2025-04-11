@@ -1,0 +1,18 @@
+--find-links https://download.pytorch.org/whl/cu124 https://data.pyg.org/whl/torch-2.5.0+cu124.html
+torch==2.5.0
+torchvision
+nibabel
+numpy
+pandas
+simpleitk
+tensorboardX
+PyYaml
+# torch-scatter
+pynvml
+tensorboardX
+cython
+matplotlib
+tqdm
+einops
+fvcore
+plyfile

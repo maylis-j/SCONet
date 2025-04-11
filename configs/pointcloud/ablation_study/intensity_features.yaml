@@ -1,0 +1,7 @@
+inherit_from: configs/pointcloud/AbdomenCT-1K.yaml
+model:
+  encoder_kwargs:
+    use_colors: true
+    use_surf: false
+training:
+  out_dir: out/AbdomenCT-1K_intensity-features
